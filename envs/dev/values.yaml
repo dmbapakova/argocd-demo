@@ -58,20 +58,23 @@ service:
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  enabled: true
+  ingressClassName: "internal-nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    ingress.kubernetes.io/ssl-redirect: "false"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+
   hosts:
-    - host: chart-example.local
+    - host: "dev-internal-artemis.thedevsecopsai.com"
       paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-    # - secretName: chart-example-tls
-    #   hosts:
-    #     - chart-example.local
+      - path: /
+        pathType: ImplementationSpecific
+
+  tls:
+    - secretName: "dev-artemis-tls"
+      hosts:
+        - "dev-internal-artemis.thedevsecopsai.com"
 
 # -- Expose the service via gateway-api HTTPRoute
 # Requires Gateway API resources and suitable controller installed within the cluster
