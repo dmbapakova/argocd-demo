@@ -58,7 +58,7 @@ securityContext: {}
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: true
-  className: "internal-nginx"
+  className: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     ingress.kubernetes.io/ssl-redirect: "false"
